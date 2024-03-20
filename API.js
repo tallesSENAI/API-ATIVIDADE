@@ -95,6 +95,101 @@ server.get('/despesas', (req, res) => {//get DESPESAS
     res.send();
 });
 
+//**********************************************************************//
+
+server.post('/categorias', (req, res) => {//post CATEGORIAS
+
+    const descricao  =  req.body.descricao;
+
+    let codigo = -99999999999999999999999999;
+    for(let i = 0; i < CategoriaLista.length; i++){
+
+        const categoria = CategoriaLista[i];
+
+        if (categoria.id > codigo){
+            codigo = categoria.id;
+        }
+    }
+    
+    //if para obrigar o código a ser sempre positivo
+    if(codigo < 0){
+        codigo = 0;
+    }
+    
+    const categoria = {
+        id: codigo+1, //corrige a sequência correta de códigos dos usuários
+        descricao: descricao
+    };
+
+    CategoriaLista.push(categoria);
+    res.send();
+});
+
+server.post('/receitas', (req, res) => {//post RECEITAS
+
+    const descricao  =  req.body.descricao;
+    const valor  =  req.body.valor;
+    const categoriaId  =  req.body.categoriaId;
+
+    let codigo = -99999999999999999999999999;
+    for(let i = 0; i < ReceitaLista.length; i++){
+
+        const receita = ReceitaLista[i];
+
+        if (receita.id > codigo){
+            codigo = receita.id;
+        }
+    }
+    
+    //if para obrigar o código a ser sempre positivo
+    if(codigo < 0){
+        codigo = 0;
+    }
+    
+    const receita = {
+        id: codigo+1, //corrige a sequência correta de códigos dos usuários
+        descricao: descricao,
+        valor: valor,
+        categoriaId: categoriaId
+    };
+
+    ReceitaLista.push(receita);
+    res.send();
+});
+
+server.post('/despesas', (req, res) => {//post RECEITAS
+
+    const descricao  =  req.body.descricao;
+    const valor  =  req.body.valor;
+    const categoriaId  =  req.body.categoriaId;
+
+    let codigo = -99999999999999999999999999;
+    for(let i = 0; i < DespesaLista.length; i++){
+
+        const despesa = DespesaLista[i];
+
+        if (despesa.id > codigo){
+            codigo = despesa.id;
+        }
+    }
+    
+    //if para obrigar o código a ser sempre positivo
+    if(codigo < 0){
+        codigo = 0;
+    }
+    
+    const despesa = {
+        id: codigo+1, //corrige a sequência correta de códigos dos usuários
+        descricao: descricao,
+        valor: valor,
+        categoriaId: categoriaId
+    };
+
+    DespesaLista.push(despesa);
+    res.send();
+});
+
+
 
 //servidor se hospeda na porta 4300 para poder estar rodando
 //esta função "listen" TEM QUE SER a última do arquivo/projeto/código
